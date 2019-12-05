@@ -1,14 +1,14 @@
 import * as cheerio from 'cheerio'
-import {EventProxy} from 'eventproxy';
-import * as url from 'url';
-import * as superagent from 'superagent';
-import {Router, Request, Response, NextFunction, Params} from 'express';
+import {EventProxy} from 'eventproxy'
+import * as url from 'url'
+import * as superagent from 'superagent'
+import {Router, Request, Response, NextFunction, Params} from 'express'
 import {agent} from '../src/promise'
 
-const router: Router = Router();
+const proxyRouter: Router = Router();
 
 /* GET home page. */
-router.get('/', async (req: Request<Params, any, any>, res: Response<any>, next: NextFunction): Promise<void> => {
+proxyRouter.get('/', async (req: Request<Params, any, any>, res: Response<any>, next: NextFunction): Promise<void> => {
   const cnodeUrl: string = 'https://cnodejs.org/';
   const text: string     = await agent(cnodeUrl);
   const topicUrls: any[] = [];
@@ -57,4 +57,4 @@ router.get('/', async (req: Request<Params, any, any>, res: Response<any>, next:
   });
 });
 
-export {router}
+export {proxyRouter}

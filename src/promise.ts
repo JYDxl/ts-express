@@ -1,4 +1,4 @@
-import * as superagent from 'superagent';
+import * as superagent from 'superagent'
 
 async function agent(url): Promise<string> {
   return new Promise((resolve: (value?: string) => void, reject: (reason?: any) => void): void => {

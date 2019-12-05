@@ -1,12 +1,12 @@
-import * as cookieParser from 'cookie-parser';
+import * as cookieParser from 'cookie-parser'
 import * as express from "express"
-import * as logger from 'morgan';
-import * as path from 'path';
-import {Express} from 'express';
-import {router as usersRouter} from './routes/users';
-import {router as agentRouter} from './routes/agent';
-import {router as indexRouter} from './routes/index';
-import {router as proxyRouter} from './routes/proxy';
+import * as logger from 'morgan'
+import * as path from 'path'
+import {Express} from 'express'
+import {indexRouter} from './routes'
+import {usersRouter} from './routes/users'
+import {agentRouter} from './routes/agent'
+import {proxyRouter} from './routes/proxy'
 
 const app: Express = express();
 
