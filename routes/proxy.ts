@@ -1,60 +1,73 @@
-import * as cheerio from 'cheerio'
-import {EventProxy} from 'eventproxy'
-import * as url from 'url'
 import * as superagent from 'superagent'
-import {Router, Request, Response, NextFunction, Params} from 'express'
-import {agent} from '../src/promise'
+import * as cheerio from 'cheerio'
+import * as url from 'url'
+import {EventProxy} from 'eventproxy'
+import {Router} from 'express'
+import {logger} from '../src/util/logger'
+import {agent} from '../src/util/promise'
 
-const proxyRouter: Router = Router();
+const proxyRouter = Router();
+const log         = logger();
 
-/* GET home page. */
-proxyRouter.get('/', async (req: Request<Params, any, any>, res: Response<any>, next: NextFunction): Promise<void> => {
-  const cnodeUrl: string = 'https://cnodejs.org/';
-  const text: string     = await agent(cnodeUrl);
-  const topicUrls: any[] = [];
-  const $: CheerioStatic = cheerio.load(text);
-  $('#topic_list .topic_title').each((idx: number, element: CheerioElement): void => {
-    const $element: Cheerio = $(element);
-    const href: string      = url.resolve(cnodeUrl, $element.attr('href'));
+proxyRouter.get('/', async (req, res, next) => {
+  const cnodeUrl  = 'https://cnodejs.org/';
+  const text      = await agent(cnodeUrl);
+  const topicUrls = new Array<string>();
+  const $         = cheerio.load(text);
+  $('#topic_list .topic_title').each((index, element) => {
+    const $element = $(element);
+    const href     = url.resolve(cnodeUrl, $element.attr('href'));
     topicUrls.push(href);
   });
-  const ep: EventProxy = EventProxy.create();
-  ep.after('topic_html', topicUrls.length, (topics: any[]): void => {
-    const result: { comment1: string; href: any; title: string }[] = topics.map((item: any): any => {
-      const topicUrl: any  = item.url;
-      const topicHtml: any = item.html;
+  log.info("urls");
+  log.info(topicUrls);
+  const ep = EventProxy.create();
+  ep.after<TopicInfo[]>('topic_html', topicUrls.length, results => {
+    const result = results.map<ResultInfo>((value, index, array) => {
+      const topicUrl  = value.url;
+      const topicHtml = value.html;
       if (topicHtml instanceof Error) {
         return {
-          title   : topicHtml.name,
-          href    : topicUrl,
-          comment1: topicHtml.message,
+          title  : topicHtml.name,
+          href   : topicUrl,
+          comment: topicHtml.message,
         };
       }
-      const $: CheerioStatic = cheerio.load(topicHtml);
+      const $ = cheerio.load(topicHtml);
       return {
-        title   : $('.topic_full_title').text().trim(),
-        href    : topicUrl,
-        comment1: $('.reply_content').eq(0).text().trim(),
+        title  : $('.topic_full_title').text().trim(),
+        href   : topicUrl,
+        comment: $('.reply_content').eq(0).text().trim(),
       };
     });
-    console.log('final:');
-    console.log(result);
+    log.info('final:');
+    log.info(result);
     res.send(result);
   });
-
-  topicUrls.forEach((topicUrl: any): void => {
+  topicUrls.forEach((topicUrl, index, array) => {
     superagent
       .get(topicUrl)
-      .end((err, res): void => {
+      .end((err, response) => {
         if (err) {
-          console.log(`fetch ${topicUrl} failure`);
-          ep.emit('topic_html', {url: topicUrl, html: err});
-          return
+          log.info(`fetch ${topicUrl} failure`);
+          ep.emit<TopicInfo>('topic_html', {url: topicUrl, html: err});
+        } else {
+          log.info(`fetch ${topicUrl} success`);
+          ep.emit<TopicInfo>('topic_html', {url: topicUrl, html: response.text});
         }
-        console.log(`fetch ${topicUrl} successful`);
-        ep.emit('topic_html', {url: topicUrl, html: res.text});
-      });
-  });
+      })
+  })
 });
+
+interface ResultInfo {
+  title: string
+  href: string
+  comment: string
+}
+
+interface TopicInfo {
+  url: string
+  html: Error | string | any
+}
 
 export {proxyRouter}

@@ -1,9 +1,8 @@
-import {Router, Request, Response, NextFunction, Params} from 'express'
+import {Router} from 'express'
 
-const indexRouter: Router = Router();
+const indexRouter = Router();
 
-/* GET home page. */
-indexRouter.get('/', async (req: Request<Params, any, any>, res: Response<any>, next: NextFunction): Promise<void> => {
+indexRouter.get('/', async (req, res, next) => {
   res.render('index', {title: 'Express'});
 });
 
