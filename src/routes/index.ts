@@ -1,9 +1,9 @@
-import {Router} from 'express'
+import {Router} from "express";
 
 const indexRouter = Router();
 
-indexRouter.get('/', async (req, res, next) => {
-  res.render('index', {title: 'Express'});
+indexRouter.get("/", async (req, res, next) => {
+  res.render("index", {title: "Express"});
 });
 
-export {indexRouter}
+export {indexRouter};

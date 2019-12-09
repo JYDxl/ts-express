@@ -1,4 +1,4 @@
-import * as request from "superagent"
+import * as request from "superagent";
 
 /**
  * superagent.
@@ -14,4 +14,4 @@ const agent = async (url: string) => {
   });
 };
 
-export {agent}
+export {agent};

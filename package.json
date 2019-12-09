@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "debug": "nodemon --inspect ./bin/www",
+    "debug": "nodemon --inspect ./bin/www DEBUG=express:*",
     "start": "node ./bin/www",
     "test": "mocha --recursive"
   },
@@ -15,7 +15,6 @@
     "utility": "1.16.3",
     "cheerio": "0.22.0",
     "request": "2.88.0",
-    "ts-node": "8.5.4",
     "morgan": "1.9.1",
     "log4js": "6.1.0",
     "debug": "4.1.1",
@@ -31,8 +30,10 @@
     "@types/mocha": "5.2.7",
     "typescript": "3.7.3",
     "supertest": "5.0.0-0",
+    "ts-node": "8.5.4",
     "nodemon": "2.0.1",
     "should": "13.2.3",
+    "tslint": "5.20.1",
     "mocha": "6.2.2"
   }
 }
