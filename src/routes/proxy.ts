@@ -3,8 +3,8 @@ import * as cheerio from 'cheerio'
 import * as url from 'url'
 import {EventProxy} from 'eventproxy'
 import {Router} from 'express'
-import {logger} from '../src/util/logger'
-import {agent} from '../src/util/promise'
+import {logger} from '../util/logger'
+import {agent} from '../util/promise'
 
 const proxyRouter = Router();
 const log         = logger();

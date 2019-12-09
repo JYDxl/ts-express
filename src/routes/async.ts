@@ -1,6 +1,6 @@
 import {mapLimit} from 'async'
 import {Router} from 'express'
-import {logger} from '../src/util/logger'
+import {logger} from '../util/logger'
 
 const asyncRouter = Router();
 const log         = logger();

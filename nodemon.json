@@ -1,0 +1,9 @@
+{
+  "verbose": true,
+  "ignore": [
+    "src/**/*.js.map",
+    "src/**/*.ts",
+    "test/*",
+    "logs/*"
+  ]
+}

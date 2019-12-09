@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio'
 import {Router} from 'express'
-import {agent} from '../src/util/promise'
+import {agent} from '../util/promise'
 
 const agentRouter = Router();
 

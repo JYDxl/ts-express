@@ -2,11 +2,12 @@ import * as cookieParser from 'cookie-parser'
 import * as express from "express"
 import * as logger from 'morgan'
 import * as path from 'path'
-import {indexRouter} from './routes'
-import {usersRouter} from './routes/users'
-import {agentRouter} from './routes/agent'
-import {proxyRouter} from './routes/proxy'
-import {asyncRouter} from './routes/async'
+import {indexRouter} from './src/routes'
+import {usersRouter} from './src/routes/users'
+import {agentRouter} from './src/routes/agent'
+import {proxyRouter} from './src/routes/proxy'
+import {asyncRouter} from './src/routes/async'
+import {fibRouter} from './src/routes/fib'
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.use('/users', usersRouter);
 app.use('/agent', agentRouter);
 app.use('/proxy', proxyRouter);
 app.use('/async', asyncRouter);
+app.use('/fib', fibRouter);
 
 export = app;
