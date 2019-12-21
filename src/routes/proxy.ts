@@ -9,7 +9,7 @@ import {agent} from "../util/promise";
 const proxyRouter = Router();
 const log         = logger();
 
-proxyRouter.get("/", async (req, res, next) => {
+proxyRouter.get("/", async (req, res) => {
   const cnodeUrl  = "https://cnodejs.org/";
   const text      = await agent(cnodeUrl);
   const topicUrls = new Array<string>();
@@ -23,7 +23,7 @@ proxyRouter.get("/", async (req, res, next) => {
   log.info(topicUrls);
   const ep = EventProxy.create();
   ep.after<ITopicInfo[]>("topic_html", topicUrls.length, (results) => {
-    const result = results.map<IResultInfo>((value, index, array) => {
+    const result = results.map<IResultInfo>((value) => {
       const topicUrl  = value.url;
       const topicHtml = value.html;
       if (topicHtml instanceof Error) {
@@ -45,7 +45,7 @@ proxyRouter.get("/", async (req, res, next) => {
     log.info(result);
     res.send(result);
   });
-  topicUrls.forEach((topicUrl, index, array) => {
+  topicUrls.forEach((topicUrl) => {
     superagent
       .get(topicUrl)
       .end((err, response) => {

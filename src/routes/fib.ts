@@ -5,7 +5,7 @@ import {logger} from "../util/logger";
 const fibRouter = Router();
 const log       = logger();
 
-fibRouter.get("/", async (req, res, next) => {
+fibRouter.get("/", async (req, res) => {
   const arg = req.query.n;
   try {
     const n = Number.parseInt(arg, 10);

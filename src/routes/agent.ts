@@ -4,7 +4,7 @@ import {agent} from "../util/promise";
 
 const agentRouter = Router();
 
-agentRouter.get("/", async (req, res, next) => {
+agentRouter.get("/", async (req, res) => {
   const text  = await agent("https://cnodejs.org/");
   const $     = cheerio.load(text);
   const items = [];

@@ -2,7 +2,7 @@ import {Router} from "express";
 
 const indexRouter = Router();
 
-indexRouter.get("/", async (req, res, next) => {
+indexRouter.get("/", async (req, res) => {
   res.render("index", {title: "Express"});
 });
 

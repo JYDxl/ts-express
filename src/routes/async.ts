@@ -5,7 +5,7 @@ import {logger} from "../util/logger";
 const asyncRouter = Router();
 const log         = logger();
 
-asyncRouter.get("/", async (req, res, next) => {
+asyncRouter.get("/", async (req, res) => {
   mapLimit<string, string, Error>(urls, 5, ((item, callback) => {
     fetchUrl(item, callback);
   }), (err, results) => {
