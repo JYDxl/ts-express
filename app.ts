@@ -1,5 +1,7 @@
+// @ts-ignore
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
+// @ts-ignore
 import * as logger from "morgan";
 import * as path from "path";
 import {indexRouter} from "./src/routes";

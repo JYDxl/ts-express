@@ -3,3 +3,4 @@ node_modules
 logs
 *.js
 *.js.map
+.DS_Store

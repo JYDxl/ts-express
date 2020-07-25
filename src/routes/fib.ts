@@ -6,7 +6,7 @@ const fibRouter = Router();
 const log       = logger();
 
 fibRouter.get("/", async (req, res) => {
-  const arg = req.query.n;
+  const arg = req.query.n as string;
   try {
     const n = Number.parseInt(arg, 10);
     res.send(String(fibonacci(n)));

@@ -7,7 +7,7 @@ const agentRouter = Router();
 agentRouter.get("/", async (req, res) => {
   const text  = await agent("https://cnodejs.org/");
   const $     = cheerio.load(text);
-  const items = [];
+  const items = new Array<IData>();
   $("#topic_list .topic_title").each((index, element) => {
     const $element = $(element);
     items.push({
@@ -17,5 +17,10 @@ agentRouter.get("/", async (req, res) => {
   });
   res.send(items);
 });
+
+interface IData {
+  href: string;
+  title: string;
+}
 
 export {agentRouter};

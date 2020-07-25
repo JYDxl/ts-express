@@ -4,7 +4,8 @@
     "moduleResolution": "node",
     "target": "es6",
     "sourceMap": true,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "noImplicitAny": true
   },
   "exclude": [
     "node_modules"
